@@ -1,3 +1,4 @@
+@Library('shared') _
 pipeline {
     agent any
 
@@ -20,7 +21,7 @@ pipeline {
             steps {
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'pavi', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                     script {
-                        sh "aws cloudformation deploy --stack-name ${STACK_NAME} --template-file ${TEMPLATE_FILE} --parameter-overrides InstanceType=${params.InstanceType} ImageId=${params.ImageId} KeyName=${params.KeyName} SecurityGroupIds=${params.SecurityGroupIds} SubnetId=${params.SubnetId} EC2Name=${params.EC2Name} --capabilities CAPABILITY_NAMED_IAM"
+                        shared()
                     }
                 }
             }
